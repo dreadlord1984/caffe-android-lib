@@ -3,59 +3,41 @@ Caffe-Android-Lib
 ## Goal
 Porting [caffe](https://github.com/BVLC/caffe) to android platform
 
+### Support
+* Up-to-date caffe ([d91572d](https://github.com/BVLC/caffe/commit/d91572da2ea5e63c9eaacaf013dfbcbc0ada5f67))
+* CPU only
+* Without support for some IO libs (leveldb and hdf5)
+
 ## Build
-```
+Tested with Android NDK r11c and cmake 3.3.2 on Ubuntu 14.04
+
+```shell
 git clone --recursive https://github.com/sh1r0/caffe-android-lib.git
 cd caffe-android-lib
-./build.py $(NDK_PATH)
+export ANDROID_ABI="arm64-v8a" # Optional, see the note below
+./build.sh <path/to/ndk>
 ```
 
-## Usage
-- put required stuff into your device
+### NOTE: OpenBLAS
+OpenBLAS is the only supported BLAS choice now, and the supported ABIs are the following:
 
-	```
-	./get_model.py
-	adb shell mkdir -p /sdcard/caffe_mobile/
-	adb push caffe-mobile/jni/caffe/data/ilsvrc12/imagenet_mean.binaryproto /sdcard/caffe_mobile/
-	adb push caffe-mobile/jni/caffe/models/bvlc_reference_caffenet/ /sdcard/caffe_mobile/bvlc_reference_caffenet/
-	```
-- copy `caffe-mobile/libs/armeabi-v7a/*.so` to your jni lib directory
-- in your main activity
+* `armeabi`
+* `armeabi-v7a-hard-softfp with NEON`
+* `arm64-v8a` (default)
+* `x86`
+* `x86_64`
 
-	```java
-	static {
-		System.loadLibrary("caffe");
-		System.loadLibrary("mira-cnn");
-	}
-	```
-- create `ImageNet.java`
+## Issues
 
-	```java
-	package com.sh1r0.caffe_android_demo;
+Any comments, issues or PRs are welcomed.
+Thanks.
 
-	public class ImageNet {
-		public native void enableLog(boolean enabled);
-		public native int initTest(String modelPath, String weightsPath);
-		public native int runTest(String imgPath);
-	}
-	```
-- call native methods
-
-	```java
-	ImageNet imageNet = new ImageNet()
-	imageNet.initTest(); // init once
-	...
-	imageNet.runTest(imgPath);
-	```
+## TODO
+- [ ] integrate using CMake's ExternalProject
+- [ ] add IO dependency support (i.e., leveldb and hdf5)
+- [ ] OpenCL support
+- [ ] CUDA suuport
 
 ## Optional
 `.envrc` files are for [direnv](http://direnv.net/)
 > direnv is an environment variable manager for your shell. It knows how to hook into bash, zsh and fish shell to load or unload environment variables depending on your current directory. This allows to have project-specific environment variables and not clutter the "~/.profile" file.
-
-## Dependency
-* [Boost-for-Android](https://github.com/MysticTreeGames/Boost-for-Android)
-* [protobuf](https://code.google.com/p/protobuf)
-* [Eigen](http://eigen.tuxfamily.org)
-
-## Credits
-* [caffe-compact](https://github.com/chyh1990/caffe-compact)

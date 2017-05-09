@@ -1,7 +1,24 @@
-[submodule "caffe-mobile/jni/caffe"]
-	path = caffe-mobile/jni/caffe
-	url = git@github.com:sh1r0/caffe.git
-	branch = image_from_memory
-[submodule "Boost-for-Android"]
-	path = Boost-for-Android
-	url = git@github.com:sh1r0/Boost-for-Android.git
+[submodule "OpenBLAS"]
+	path = OpenBLAS
+	url = https://github.com/xianyi/OpenBLAS.git
+[submodule "protobuf"]
+	path = protobuf
+	url = https://github.com/google/protobuf.git
+[submodule "opencv"]
+	path = opencv
+	url = https://github.com/Itseez/opencv.git
+[submodule "caffe"]
+	path = caffe
+	url = https://github.com/sh1r0/caffe.git
+[submodule "android-cmake"]
+	path = android-cmake
+	url = https://github.com/sh1r0/android-cmake.git
+[submodule "lmdb"]
+	path = lmdb
+	url = https://github.com/LMDB/lmdb.git
+[submodule "glog"]
+	path = glog
+	url = https://github.com/sh1r0/glog.git
+[submodule "gflags"]
+	path = gflags
+	url = https://github.com/gflags/gflags.git
